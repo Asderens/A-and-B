@@ -1,0 +1,416 @@
+<canvas id=canvas style="border:1px solid black;" height=200 width=500></canvas>
+
+
+
+<script>
+
+
+apples=0
+f=0
+speed=1
+endgame=false
+Y=90
+i=0
+knife2=0
+function getxy2()
+{
+x=Math.round(Math.random()*(200))+200
+y=Math.round(Math.random()*(100))
+return [x, y]
+}
+
+c=0
+
+function getxy()
+{
+
+
+x=getxy2()[0]
+y=getxy2()[1]
+
+for(c=get_start; c<get_len; c++)
+{
+
+
+
+elem=get[c]
+
+
+if(elem.img&&elem.x==get[c].x&&elem.y==get[c].y)
+{
+if(rect2Rect(elem.x, elem.y, elem.w, elem.h, x, y, 50, 50)){return getxy(x,y)}
+}
+
+
+return [x, y]
+}
+
+
+}
+
+
+
+function rect2Rect(obj1, obj2) {
+	   return ( obj1.offsetLeft <= obj2.offsetLeft + obj2.offsetWidth && obj1.offsetLeft + obj1.offsetWidth  >=  obj2.offsetLeft && obj1.offsetTop + obj1.offsetHeight >=  obj2.offsetTop && obj1.offsetTop <= obj2.offsetTop +  obj2.offsetHeight );
+
+	}
+
+
+
+function rect2Rect(x1, y1, w1, h1, x2, y2, w2, h2)
+{
+
+return (x1<x2+w2 && x1+w1>=x2&&y1+h1>=y2&&y1<=y2+h2)
+
+}
+
+
+x=0
+y=0
+
+x=Math.round(Math.random()*(200))+200
+y=Math.round(Math.random()*(100))
+
+
+
+get = {
+0:{}
+}
+
+
+
+get2 =
+{
+0:{x:150, y:50, img:"cloud.bmp", w:150, h:50}
+}
+
+knifes = 
+{
+
+}
+
+knife_start=0
+
+
+get_len=1
+get_start=0
+knife_end=1
+
+
+
+
+setInterval(function()
+{
+
+if(endgame==true){canvas.width=canvas.width
+
+ctx = canvas.getContext("2d")
+
+ctx.font = "20px Arial";
+str="¬ы проиграли, набрав " + i + " очко(в). "
+
+if(!f&&!apples){
+ctx.font = "20px Arial";
+
+ctx.fillText("–екса ничем не вырвало.",10, 50);
+
+}
+
+ctx.fillText(str,10, 30);
+if(apples&&!f) {
+ctx.font = "20px Arial";
+
+ctx.fillText("–екса вырвало " + apples + " €блоками.",10, 50);
+}
+
+if(apples&&f) {
+ctx.font = "20px Arial";
+
+ctx.fillText("–екса вырвало " + apples + " €блоками",10, 50);
+}
+
+
+if(f&&apples) {
+ctx.font = "20px Arial";
+ctx.fillText("и " + f + " коробками попкорна.",10, 70);
+
+}
+
+
+
+if(f&&!apples) {
+ctx.font = "20px Arial";
+ctx.fillText("–екса вырвало " + f + " коробками попкорна.",10, 50);
+
+}
+
+
+
+
+
+
+return false}
+
+canvas.width=canvas.width
+
+
+ctx = canvas.getContext("2d")
+img=new Image()
+img.src="x2.bmp"
+ctx.drawImage(img,0,0 ,500, 200)
+ctx = canvas.getContext("2d")
+
+
+img=new Image()
+
+if(c2%2==0)
+{
+if(i<50)
+{
+img.src="Cinorex.bmp"
+}
+if(i>=50&&i<100)
+{
+img.src="Rexc.bmp"
+}
+
+
+if(i>=100)
+{
+img.src="Rexc5.bmp"
+}
+
+}
+
+
+
+
+
+else
+{
+if(i<50)
+{
+img.src="Cinorex2.bmp"
+}
+if(i>=50&&i<100)
+{
+img.src="Rex_10.bmp"
+}
+
+if(i>=100)
+{
+img.src="Rexc2.bmp"
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+ctx.drawImage(img, 0,Y, 120, 90)
+ctx = canvas.getContext("2d")
+
+
+ctx = canvas.getContext("2d")
+/*
+for(c=get_start; c<get_len; c++)
+{
+*/
+
+for(c=knife_start; c<knife_end; c++)
+{
+
+img = new Image()
+if(knifes[c]&&knifes[c].img)
+{
+img.src=knifes[c].img
+ctx.drawImage(img, knifes[c].x, knifes[c].y, knifes[c].w, knifes[c].h)
+knifes[c].x-=speed
+knifes[c].y-=0.01
+
+if(rect2Rect(0,Y, 120, 90, knifes[c].x+90, knifes[c].y+20, 50, 10)){
+
+endgame=true
+
+}
+
+}
+
+
+
+}
+
+
+for(c=get_start; c<get_len; c++)
+{
+
+
+
+
+img = new Image()
+if(get[c].img)
+{
+img.src=get[c].img
+ctx.drawImage(img, get[c].x, get[c].y, get[c].w, get[c].h)
+get[c].x-=speed
+get[c].y-=0.01
+
+
+
+}
+
+if(rect2Rect(0,Y, 120, 90, get[c].x, get[c].y, get[c].w, get[c].h)){
+
+i+=get[c].i
+
+if(get[c].type=="€блоко"){apples+=1}
+if(get[c].type=="попкорн"){f+=1}
+
+
+
+get[c]={}
+break
+}
+
+
+
+}
+
+
+
+
+
+
+ctx.font = "20px Arial";
+ctx.fillText(i,10, 30);
+
+
+}, 0)
+
+
+setInterval(function()
+{
+
+
+
+
+
+x=getxy()[0]
+y=getxy()[1]
+get[get_len]={x:500+x, y:y, img:"apple5.bmp", w:50, h:50, i:2, type:"€блоко"}
+
+
+
+get_len+=1
+
+
+
+
+}, 1900)
+
+
+
+setInterval(function()
+{
+
+
+
+
+
+x=getxy()[0]
+y=getxy()[1]
+get[get_len]={x:500+x, y:y, img:"f.bmp", w:50, h:50, i:5, type:"попкорн"}
+
+
+
+get_len+=1
+
+
+
+
+}, 2900)
+
+
+
+c2=0
+
+document.onkeyup=function(e)
+{
+
+if(e.keyCode==38&&X_Y==false&&Y_X==false)
+{
+
+X_Y=true
+Y_X=false
+
+}
+
+
+
+
+}
+
+setInterval(function()
+{
+
+
+c2+=1
+
+
+
+
+}, 200)
+
+
+X_Y=false
+Y_X=false
+
+
+
+setInterval(function()
+{
+if(Y<=0){X_Y=false;Y_X=true}
+if(Y_X&&Y<=90){Y+=1;X_Y=false}
+if(X_Y==true&&Y>0&&Y_X==false){Y-=1}
+
+
+if(Y>90){X_Y=false;Y_X=false}
+
+}, 10)
+
+
+
+setInterval(function()
+{
+
+speed+=0.1
+}, 900)
+
+
+setInterval(function()
+{
+
+x=getxy()[0]
+y=getxy()[1]
+knifes[knife2]={x:500+x, y:160, img:"knife.bmp", w:90, h:50, i:5}
+
+
+
+
+knife2+=1
+
+knife_end+=1
+
+
+
+},  8000)
+
+</script>
